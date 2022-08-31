@@ -22,8 +22,14 @@ Plugins' content need to be copied over to:
 ```
 on the Moodle server.
 
-# API
+# Connection to File Server API
 
 On the JupyterHub side, an API needs to be deployed on a server that has access to all user's files - typically the file server of the JupyterHub installation.
+In Kubernetes, the API is deployed in the same namespace as the JupyterHub.
+
+Find a description of configuration items for the API connection in the [submission plugin documentation](https://github.com/epfl-cede/moodle-mod-assign-submission-noto).
 
 See this repository for the API: [epfl-cede/jupyterhub-fileserver-api](https://github.com/epfl-cede/jupyterhub-fileserver-api)
+
+# Configuration
+The plugin has no global items to configure. Just make sure you activate _Jupyter notebooks_ in the _Feedback types_ section of the assignment activity.
