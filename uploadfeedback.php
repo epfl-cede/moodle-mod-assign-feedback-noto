@@ -27,7 +27,6 @@ use core\notification;
 require_once(dirname(__FILE__) . '/../../../../config.php');
 require_once(dirname(__FILE__) . '/locallib.php');
 require_once($CFG->libdir . '/formslib.php');
-define('ASSIGNFEEDBACK_NOTO_FILEAREA', 'feedback_noto');
 
 $cmid = required_param('id', PARAM_INT);
 
