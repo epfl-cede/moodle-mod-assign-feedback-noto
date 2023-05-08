@@ -36,6 +36,7 @@ class notocopy_form extends \moodleform {
         global $DB;
         $cm = $this->_customdata['cm'];
         $id = $this->_customdata['id'];
+        $users = $this->_customdata['users'];
         $mform = $this->_form;
         $mform->addElement('static', 'submitnotoforgrading_tree_teacherlabel', '', get_string('submitnotoforgrading_tree_teacherlabel', 'assignfeedback_noto'));
         $mform->addElement('text', 'assignsubmission_noto_directory', get_string('assignsubmission_noto_directory_destination', 'assignfeedback_noto').
@@ -57,7 +58,7 @@ class notocopy_form extends \moodleform {
         $mform->setType('plugin', PARAM_PLUGIN);
         $mform->addElement('hidden', 'pluginsubtype', 'assignfeedback');
         $mform->setType('pluginsubtype', PARAM_PLUGIN);
-        $mform->addElement('hidden', 'selectedusers', implode(',', $this->_customdata['users']));
+        $mform->addElement('hidden', 'selectedusers', implode(',', $users));
         $mform->setType('selectedusers', PARAM_SEQUENCE);
         $mform->setType('id', PARAM_INT);
         \assign_feedback_noto::mform_add_catalog_tree($mform, $cm->course);
