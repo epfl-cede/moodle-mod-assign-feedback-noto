@@ -36,26 +36,8 @@ class notocopyfeedback_form extends \moodleform {
         global $DB;
         $cm = $this->_customdata['cm'];
         $id = $this->_customdata['id'];
-
-//        if (isset($this->_customdata['submission'])) {
-//            $submission = $this->_customdata['submission'];
-//        }
+        $users = $this->_customdata['users'];
         $mform = $this->_form;
-        /*
-        if (!empty($submission)) {
-            $mform->addElement('static', 'submissiondate', get_string('submissiondate', 'assignsubmission_noto'), date('D M j G:i:s T Y', $submission->timemodified));
-            $teacher_copy = $DB->get_record('assignsubmission_noto_tcopy', ['studentid'=>$submission->userid, 'assignmentid'=>$submission->assignment]);
-            if ($teacher_copy) {
-                # is this the most recent submission?
-                if ($teacher_copy->timecreated > $submission->timemodified) {
-                    #$mform->addElement('static', 'pagehelp', get_string('info', 'assignsubmission_noto'), get_string('viewsubmissions_recentcopy', 'assignsubmission_noto'));
-                    #return;
-                } else {
-                    $mform->addElement('static', 'pagehelp', get_string('attention', 'assignsubmission_noto'), get_string('viewsubmissions_diffcopy', 'assignsubmission_noto'));
-                }
-            }
-        }
-        */
         $mform->addElement('static', 'submitnotoforgrading_tree_teacherlabel', '', get_string('submitnotofeedback_tree_teacherlabel', 'assignfeedback_noto'));
         $mform->addElement('text', 'assignsubmission_noto_directory', get_string('assignsubmission_noto_directory_destination', 'assignsubmission_noto').
             '<div id="submit-jupyter"></div>', array('id'=>'assignsubmission_noto_directory', 'size'=>80));
@@ -64,32 +46,24 @@ class notocopyfeedback_form extends \moodleform {
         $mform->freeze('assignsubmission_noto_directory');
         $mform->addElement('hidden', 'assignsubmission_noto_directory_h', '', array('id'=>'assignsubmission_noto_directory_h'));  # _h is for "hidden" if you're wondering
         $mform->setType('assignsubmission_noto_directory_h', PARAM_TEXT);
-//        if (!empty($submission)) {
-//            $mform->addElement('hidden', 'id', $submission->id);
-//        } else {
-            $mform->addElement('hidden', 'id', $id);
-            $mform->addElement('hidden', 'operation', 'plugingradingbatchoperation_noto_uploadnoto');
-            $mform->setType('operation', PARAM_ALPHAEXT);
-            $mform->addElement('hidden', 'action', 'viewpluginpage');
-            $mform->setType('action', PARAM_ALPHA);
-            $mform->addElement('hidden', 'pluginaction', 'uploadnoto');
-            $mform->setType('pluginaction', PARAM_ALPHA);
-            $mform->addElement('hidden', 'plugin', 'noto');
-            $mform->setType('plugin', PARAM_PLUGIN);
-            $mform->addElement('hidden', 'pluginsubtype', 'assignfeedback');
-            $mform->setType('pluginsubtype', PARAM_PLUGIN);
-            $mform->addElement('hidden', 'selectedusers', implode(',', $this->_customdata['users']));
-            $mform->setType('selectedusers', PARAM_SEQUENCE);
-//        }
+        $mform->addElement('hidden', 'id', $id);
+        $mform->addElement('hidden', 'operation', 'plugingradingbatchoperation_noto_uploadnoto');
+        $mform->setType('operation', PARAM_ALPHAEXT);
+        $mform->addElement('hidden', 'action', 'viewpluginpage');
+        $mform->setType('action', PARAM_ALPHA);
+        $mform->addElement('hidden', 'pluginaction', 'uploadnoto');
+        $mform->setType('pluginaction', PARAM_ALPHA);
+        $mform->addElement('hidden', 'plugin', 'noto');
+        $mform->setType('plugin', PARAM_PLUGIN);
+        $mform->addElement('hidden', 'pluginsubtype', 'assignfeedback');
+        $mform->setType('pluginsubtype', PARAM_PLUGIN);
+        $mform->addElement('hidden', 'selectedusers', implode(',', $users));
+        $mform->setType('selectedusers', PARAM_SEQUENCE);
         $mform->setType('id', PARAM_INT);
         \assign_feedback_noto::mform_add_catalog_tree($mform, $cm->course);
         $buttonarray=array();
         $buttonarray[] =& $mform->createElement('submit', 'reload', get_string('reloadtree', 'assignsubmission_noto'), ['id'=>'assignsubmission_noto_reloadtree_submit']);
- //       if (empty($this->_customdata['users'])) {
-            $buttonarray[] =& $mform->createElement('submit', 'submitbutton', get_string('copyfeedback', 'assignfeedback_noto'));
- //       } else {
- //           $buttonarray[] =& $mform->createElement('submit', 'submitbutton', get_string('copyfeedback', 'assignfeedback_noto'));
- //       }
+        $buttonarray[] =& $mform->createElement('submit', 'submitbutton', get_string('copyfeedback', 'assignfeedback_noto'));
         $buttonarray[] =& $mform->createElement('submit', 'cancel', get_string('cancel'));
         $mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
     }
