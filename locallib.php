@@ -24,6 +24,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+use \mod_assign\output\assign_header;
 
 define('FILEAREA', 'noto_zips');
 define('ASSIGNFEEDBACK_NOTO_FILEAREA', 'feedback_noto');

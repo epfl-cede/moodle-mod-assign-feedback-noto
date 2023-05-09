@@ -27,7 +27,6 @@ use core\notification;
 require_once(dirname(__FILE__) . '/../../../../config.php');
 require_once(dirname(__FILE__) . '/locallib.php');
 require_once($CFG->libdir . '/formslib.php');
-define('ASSIGNFEEDBACK_NOTO_FILEAREA', 'feedback_noto');
 
 $cmid = required_param('id', PARAM_INT);
 
@@ -45,8 +44,8 @@ $PAGE->set_url('/mod/assign/feedback/noto/uploadfeedback.php', array('id' => $cm
 $context = context_module::instance($cm->id);
 $PAGE->set_context($context);
 $PAGE->set_cm($cm);
-$PAGE->set_title(get_string('viewuploadfeedback_pagetitle', 'assignfeedback_noto', fullname($student)));
-$PAGE->set_heading(get_string('viewuploadfeedback_pagetitle', 'assignfeedback_noto', fullname($student)));
+$PAGE->set_title(get_string('viewuploadfeedback_pagetitle', 'assignfeedback_noto'));
+$PAGE->set_heading(get_string('viewuploadfeedback_pagetitle', 'assignfeedback_noto'));
 $PAGE->set_pagelayout('standard');
 require_login($cm->course);
 $config = get_config('assignfeedbacknoto');
