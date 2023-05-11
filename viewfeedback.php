@@ -25,8 +25,6 @@
 require_once(dirname(__FILE__) . '/../../../../config.php');
 require_once(dirname(__FILE__) . '/locallib.php');
 require_once($CFG->libdir . '/formslib.php');
-define('ASSIGNFEEDBACK_NOTO_FILEAREA',
-        'feedback_noto');    # it is also a constant in class assign_submission_noto in locallib.php, but i'm not requiring it only for 1 constant
 
 $feedbackid = required_param('id', PARAM_INT);
 $feedbacknoto = $DB->get_record('assignfeedback_noto', array('id' => $feedbackid));
@@ -41,7 +39,7 @@ if (!$cm) {
 }
 $grade = $DB->get_record('assign_grades', array('id' => $feedbacknoto->grade));
 
-$PAGE->set_url('/mod/assign/feedback/noto/viewfeedback.php', array('id' => feedbackid));
+$PAGE->set_url('/mod/assign/feedback/noto/viewfeedback.php', array('id' => $feedbackid));
 
 $context = context_module::instance($cm->id);
 $PAGE->set_context($context);
