@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2022090800;
+$plugin->version   = 2023051100;
 $plugin->requires  = 2020060900;
 $plugin->component = 'assignfeedback_noto';
 $plugin->dependencies = array(

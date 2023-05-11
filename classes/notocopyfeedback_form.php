@@ -36,7 +36,7 @@ class notocopyfeedback_form extends \moodleform {
         global $DB;
         $cm = $this->_customdata['cm'];
         $id = $this->_customdata['id'];
-        $userscustomdata = $this->_customdata['users'];
+        $userscustomdata = isset($this->_customdata['users']) ? $userscustomdata : null;
         $users = isset($userscustomdata) && is_array($userscustomdata) ? $userscustomdata : [];
         $mform = $this->_form;
         $mform->addElement('static', 'submitnotoforgrading_tree_teacherlabel', '', get_string('submitnotofeedback_tree_teacherlabel', 'assignfeedback_noto'));
