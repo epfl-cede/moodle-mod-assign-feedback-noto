@@ -53,3 +53,8 @@ $string['viewuploadfeedback_pagetitle'] = 'Upload Feedback from Jupyter to moodl
 $string['uploadnoto'] = 'Upload submissions to Jupyter';
 $string['usersuploadedsuccessfully'] = 'Users submissions were uploaded to your workspace successfuly';
 $string['uploadjupyter'] = 'Upload multiple feedback(s) from Jupyter';
+
+$string['autograde'] = 'Autograde';
+$string['batchoperationconfirmautograde'] = 'Send the selected submissions for autograding?';
+$string['submissionsautogradedsuccessfully'] = 'Users submissions were sent for autograding';
+$string[''] = '';

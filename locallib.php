@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 use \mod_assign\output\assign_header;
 
-define('FILEAREA', 'noto_zips');
+defined('FILEAREA') || define('FILEAREA', 'noto_zips');
 define('ASSIGNFEEDBACK_NOTO_FILEAREA', 'feedback_noto');
 define('ASSIGNFEEDBACK_NOTO_MAXSUMMARYFILES', 1);
 
@@ -57,7 +57,7 @@ class assign_feedback_noto extends assign_feedback_plugin {
      * @return array The list of batch grading operations
      */
     public function get_grading_batch_operations() {
-        return array('uploadnoto'=>get_string('uploadnoto', 'assignfeedback_noto'));
+        return array('uploadnoto'=>get_string('uploadnoto', 'assignfeedback_noto'), 'autograde'=>get_string('autograde', 'assignfeedback_noto'));
     }
 
     /**
@@ -68,6 +68,22 @@ class assign_feedback_noto extends assign_feedback_plugin {
      */
     public function has_user_summary() {
         return true;
+    }
+
+    /**
+     * autograde submissions of selected users
+     * @param array $userids
+     * @return void
+     */
+    public function view_batch_autograde($userids): void {
+        $cm = $this->assignment->get_course_module();
+        if ($userids) {
+            assign_submission_noto::send_to_autograde_users($cm, $userids);
+        } else {
+            throw new \coding_exception('no autograde users selected'); // should never happen
+        }
+        #\core\notification::success(get_string('submissionsautogradedsuccessfully', 'assignfeedback_noto'));
+        redirect(new moodle_url('view.php', array('id'=>$cm->id, 'action'=>'grading')));
     }
 
     /**
@@ -169,9 +185,7 @@ class assign_feedback_noto extends assign_feedback_plugin {
             }
             \core\notification::success(get_string('usersuploadedsuccessfully', 'assignfeedback_noto'));
 
-            redirect(new moodle_url('view.php',
-                                    array('id'=>$cm->id,
-                                          'action'=>'grading')));
+            redirect(new moodle_url('view.php', array('id'=>$cm->id, 'action'=>'grading')));
             return;
         } else {
 
@@ -201,6 +215,10 @@ class assign_feedback_noto extends assign_feedback_plugin {
         if ($action == 'uploadnoto') {
             return $this->view_batch_upload_noto($users);
         }
+        if ($action == 'autograde') {
+            return $this->view_batch_autograde($users);
+        }
+
         return '';
     }
 
@@ -215,6 +233,11 @@ class assign_feedback_noto extends assign_feedback_plugin {
         if ($action == 'uploadnoto') {
             $users = required_param('selectedusers', PARAM_SEQUENCE);
             return $this->view_batch_upload_noto(explode(',', $users));
+        }
+
+        if ($action == 'autograde') {
+            $users = required_param('selectedusers', PARAM_SEQUENCE);
+            return $this->view_batch_autograde(explode(',', $users));
         }
 
         if ($action == 'uploadjupyter') {
