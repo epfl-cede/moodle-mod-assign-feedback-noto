@@ -56,8 +56,25 @@ class assign_feedback_noto extends assign_feedback_plugin {
      *
      * @return array The list of batch grading operations
      */
-    public function get_grading_batch_operations() {
-        return array('uploadnoto'=>get_string('uploadnoto', 'assignfeedback_noto'), 'autograde'=>get_string('autograde', 'assignfeedback_noto'));
+    public function get_grading_batch_operation_details() {
+        global $OUTPUT;
+
+        return [
+            (object) [
+                'key' => 'uploadnoto',
+                'label' => get_string('uploadnoto', 'assignfeedback_noto'),
+                'icon' => $OUTPUT->pix_icon('i/upload', ''),
+                'confirmationtitle' => get_string('uploadnoto', 'assignfeedback_noto'),
+                'confirmationquestion' => get_string('uploadnoto', 'assignfeedback_noto') . '?',
+            ],
+            (object) [
+                'key' => 'autograde',
+                'label' => get_string('autograde', 'assignfeedback_noto'),
+                'icon' => $OUTPUT->pix_icon('i/autograde', ''),
+                'confirmationtitle' => get_string('autograde', 'assignfeedback_noto'),
+                'confirmationquestion' => get_string('autograde', 'assignfeedback_noto') . '?',
+            ],
+        ];
     }
 
     /**
