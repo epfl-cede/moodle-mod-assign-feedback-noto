@@ -101,14 +101,20 @@ if ($form->is_cancelled()) {
         throw new \moodle_exception('Empty directory returned after uzu() API call');
     }
     $new_directory_created = assignsubmission_noto\notoapi::normalize_localpath($new_directory_created);
-    if (!$config->ethz) {
+    if (!isset($config->ethz)) {
+        if(!isset($config->apinotebookpath)){
+            $config->apinotebookpath = '';
+        }
+        if(!isset($config->apiserver)){
+            $config->apiserver = '';
+        }
         $apinotebookpath = sprintf('%s/%s', trim($config->apiserver, '/'), trim($config->apinotebookpath, '/'));
     }
     $stringidentifier = 'remotecopysuccessteacher';
     $params['backtoassignment'] = html_writer::link(new moodle_url("/mod/assign/view.php", ['id' => $cm->id, 'action' => 'view']),
             get_string('backtosubmissions', 'assignfeedback_noto'), ['class' => 'btn btn-primary']);
     $params['new_directory_created'] = $new_directory_created;
-    if (!$config->ethz) {
+    if (!isset($config->ethz)) {
         $params['redirect_link'] = html_writer::tag(
                 'a',
                 get_string('redirecttonoto', 'assignfeedback_noto'),

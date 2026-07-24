@@ -194,7 +194,7 @@ class assign_feedback_noto extends assign_feedback_plugin {
                 }
                 $notoremotecopy->path = $new_directory_created;    # only one path here
                 $notoremotecopy->timecreated = time();
-                if ($notoremotecopy->id) {
+                if ($notoremotecopy) {
                     $updatestatus = $DB->update_record('assignsubmission_noto_tcopy', $notoremotecopy);
                 } else {
                     $notoremotecopy->id = $DB->insert_record('assignsubmission_noto_tcopy', $notoremotecopy);
