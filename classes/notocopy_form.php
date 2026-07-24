@@ -48,7 +48,9 @@ class notocopy_form extends \moodleform {
         $mform->addElement('hidden', 'assignsubmission_noto_directory_h', '', array('id'=>'assignsubmission_noto_directory_h'));  # _h is for "hidden" if you're wondering
         $mform->setType('assignsubmission_noto_directory_h', PARAM_TEXT);
         $mform->addElement('hidden', 'id', $id);
+        $mform->setType('id', PARAM_INT);
         $mform->addElement('hidden', 'course', $cm->course);
+        $mform->setType('course', PARAM_INT);
         $mform->addElement('hidden', 'operation', 'plugingradingbatchoperation_noto_uploadnoto');
         $mform->setType('operation', PARAM_ALPHAEXT);
         $mform->addElement('hidden', 'action', 'viewpluginpage');
@@ -61,7 +63,6 @@ class notocopy_form extends \moodleform {
         $mform->setType('pluginsubtype', PARAM_PLUGIN);
         $mform->addElement('hidden', 'selectedusers', implode(',', $users));
         $mform->setType('selectedusers', PARAM_SEQUENCE);
-        $mform->setType('id', PARAM_INT);
         \assign_feedback_noto::mform_add_catalog_tree($mform, $cm->course);
         $buttonarray=array();
         $buttonarray[] =& $mform->createElement('submit', 'reload', get_string('reloadtree', 'assignsubmission_noto'), ['id'=>'assignsubmission_noto_reloadtree_submit']);
