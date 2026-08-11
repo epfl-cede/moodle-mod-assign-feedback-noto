@@ -182,7 +182,7 @@ class assign_feedback_noto extends assign_feedback_plugin {
                     throw new \moodle_exception('Empty directory returned after uzu() API call');
                 }
                 $new_directory_created = assignsubmission_noto\notoapi::normalize_localpath($new_directory_created);
-                if (!$config->ethz) {
+                if (!$config->kubernetes_mode) {
                     $apinotebookpath = sprintf('%s/%s', trim($config->apiserver, '/'), trim($config->apinotebookpath, '/'));
                 }
                 $notoremotecopy = $DB->get_record('assignsubmission_noto_tcopy', array('studentid' => $userid,

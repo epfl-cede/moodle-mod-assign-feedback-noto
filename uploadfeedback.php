@@ -48,7 +48,7 @@ $PAGE->set_title(get_string('viewuploadfeedback_pagetitle', 'assignfeedback_noto
 $PAGE->set_heading(get_string('viewuploadfeedback_pagetitle', 'assignfeedback_noto'));
 $PAGE->set_pagelayout('standard');
 require_login($cm->course);
-$config = get_config('assignfeedbacknoto');
+$config = get_config('assignsubmission_noto');
 
 require_capability('mod/assign:grade', $context);
 
