@@ -52,7 +52,7 @@ $PAGE->set_title(get_string('viewfeedback_pagetitle', 'assignfeedback_noto', ful
 $PAGE->set_heading(get_string('viewfeedback_pagetitle', 'assignfeedback_noto', fullname($student)));
 $PAGE->set_pagelayout('standard');
 require_login($cm->course);
-$config = get_config('assignfeedbacknoto');
+$config = get_config('assignsubmission_noto');
 
 $noto_name = assign_feedback_noto::get_noto_config_name($cm->instance);
 
@@ -101,7 +101,7 @@ if ($form->is_cancelled()) {
         throw new \moodle_exception('Empty directory returned after uzu() API call');
     }
     $new_directory_created = assignsubmission_noto\notoapi::normalize_localpath($new_directory_created);
-    if (!isset($config->ethz)) {
+    if (!isset($config->kubernetes_mode)) {
         if(!isset($config->apinotebookpath)){
             $config->apinotebookpath = '';
         }
@@ -114,7 +114,7 @@ if ($form->is_cancelled()) {
     $params['backtoassignment'] = html_writer::link(new moodle_url("/mod/assign/view.php", ['id' => $cm->id, 'action' => 'view']),
             get_string('backtosubmissions', 'assignfeedback_noto'), ['class' => 'btn btn-primary']);
     $params['new_directory_created'] = $new_directory_created;
-    if (!isset($config->ethz)) {
+    if (!isset($config->kubernetes_mode)) {
         $params['redirect_link'] = html_writer::tag(
                 'a',
                 get_string('redirecttonoto', 'assignfeedback_noto'),
@@ -122,7 +122,7 @@ if ($form->is_cancelled()) {
         );
         \core\notification::success(get_string($stringidentifier, 'assignfeedback_noto', (object) $params));
     } else {
-        \core\notification::success(get_string($stringidentifier . '_ethz', 'assignsubmission_noto', (object) $params));
+        \core\notification::success(get_string($stringidentifier . '_kubernetesmode', 'assignsubmission_noto', (object) $params));
     }
     redirect(new \moodle_url('/mod/assign/view.php', array('id' => $cm->id, 'action' => 'view')));
     redirect($PAGE->url);
