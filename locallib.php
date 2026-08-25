@@ -187,16 +187,16 @@ class assign_feedback_noto extends assign_feedback_plugin {
                 }
                 $notoremotecopy = $DB->get_record('assignsubmission_noto_tcopy', array('studentid' => $userid,
                     'assignmentid' => $cm->id));
-                if (!$notoremotecopy) {
+                if ($notoremotecopy) {
+                    $notoremotecopy->path = $new_directory_created;    # only one path here
+                    $notoremotecopy->timecreated = time();
+                    $updatestatus = $DB->update_record('assignsubmission_noto_tcopy', $notoremotecopy);
+                } else {
                     $notoremotecopy = new stdClass();
                     $notoremotecopy->studentid = $userid;
                     $notoremotecopy->assignmentid = $cm->id;
-                }
-                $notoremotecopy->path = $new_directory_created;    # only one path here
-                $notoremotecopy->timecreated = time();
-                if ($notoremotecopy) {
-                    $updatestatus = $DB->update_record('assignsubmission_noto_tcopy', $notoremotecopy);
-                } else {
+                    $notoremotecopy->path = $new_directory_created;    # only one path here
+                    $notoremotecopy->timecreated = time();
                     $notoremotecopy->id = $DB->insert_record('assignsubmission_noto_tcopy', $notoremotecopy);
                 }
             }
